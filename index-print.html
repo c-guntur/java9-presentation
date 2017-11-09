@@ -1,0 +1,881 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Java 9 - Some New Features</title>
+
+		<meta name="description" content="A summary of some of the most known new features in Java 9">
+		<meta name="author" content="Chandra Guntur">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/white.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+		<link rel="icon" type="image/png" href="images/favicon.png" sizes="32x32"/>
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+
+		<style>
+			.reveal .slide-number {
+				font-size: 0.6em;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Java 9</h1>
+					<h4>Some new features</h4>
+					<img src="images/DukeWaveJ9.png" height="400"/>
+				</section>
+
+				<section data-background="images/BlankWaterMark.png" data-state="dimbg" data-background-size="150px" data-background-repeat="no-repeat">
+					<h2>Java 9 Introduction</h2>
+					<span style="font-size:0.6em;text-align:left"><p/><br/>
+						Java 9 was released on 2017-09-21, with a patch 9.0.1 released on 2017-10-17. 
+						<p/><br/>
+						<strong>Biggest</strong> upgrade to Java platform standard edition, coming after 3 and a half years. <br/>The last update was Java 8, released in March 2014.
+						<p/><br/>
+						Java 9 introduces over 150 new features and functionalities. <br/>
+						<h3 style="color:orange">Definitely not possible to cover all of them, here.</h2>
+					</span>
+				</section>
+
+				<section data-background="images/BlankWaterMark.png" data-state="dimbg" data-background-size="150px" data-background-repeat="no-repeat">
+					<section>
+						<h6>Language</h6>
+						<h1>Language Changes</h1>
+						<span style="font-size:0.6em;text-align:left"><p/><br/>
+							The next few slides cover language changes.
+						</span>
+					</section>
+
+					<section>
+						<h6>Language</h6>
+						<h2>Private Methods in Interfaces</h2>
+						<span style="font-size:0.55em;text-align:left"><p/><br/>
+							<ul>
+								<li>Aimed to allow sharing of common code between <code style="color:lightsalmon">default</code> and <code style="color:lightsalmon">static</code> methods.</li>
+								<li><code style="color:lightsalmon">private abstract</code> and <code style="color:lightsalmon">private default</code> method signatures result in compile-time errors.</li>
+								<center><img src="images/InterfaceSpecifiers.png" height="200"></center>
+								<li>Links: 
+									<ul style="font-size:0.9em;text-align:left">
+										<li>Original Bug/Feature Request: <a href="https://bugs.openjdk.java.net/browse/JDK-8071453" target="_blank">https://bugs.openjdk.java.net/browse/JDK-8071453</a></li>
+										<li>Writeup: <a href="https://cguntur.me/2017/09/02/java-9-features-private-interface-methods/" target="_blank">https://cguntur.me/2017/09/02/java-9-features-private-interface-methods/</a></li>
+									</ul>
+								</li>
+							</ul>
+						</span>
+					</section>
+
+					<section>
+						<h6>Language</h6>
+						<h2>Collections - Factory Methods</h2>
+						<span style="font-size:0.6em;text-align:left"><p/><br/>
+							<ul>
+								<li>Factory methods on collections allow ease of declaration/instantiation.</li>
+								<li>Factory methods clean up existing verbose means of construction:
+									<ul style="font-size:0.85em;text-align:left">
+										<li>Most developers first instantiate a collection</li>
+										<li>Then, they invoke <code style="color:lightsalmon">add(...)</code> or <code style="color:lightsalmon">put(...)</code> methods.</li>
+										<li>Alternatively, some use <code style="color:lightsalmon">Collections</code> factory methods to initialize from an inline <code style="color:lightsalmon">Array</code>.</li>
+									</ul>
+								</li><br/>
+								<li><code style="color:lightsalmon">List.of("one", "two");</code></li>
+								<li><code style="color:lightsalmon">Map.of("key1", "val1", "key2, "val2");</code></li>
+								<br/>
+								<li>Links: 
+									<ul style="font-size:0.85em;text-align:left">
+										<li>JEP 269 - Convenience Collection Factory Methods: <a href="http://openjdk.java.net/jeps/269" target="_blank">http://openjdk.java.net/jeps/269</a></li>
+										<li>Collections re-fuelled: <a href="https://blogs.oracle.com/java/collections-refueled" target="_blank">https://blogs.oracle.com/java/collections-refueled</a></li>
+									</ul>
+								</li>
+							</ul>
+						</span>
+					</section>
+
+					<section>
+						<h6>Language</h6>
+						<h2>Optional - Enhancements</h2>
+						<span style="font-size:0.55em;text-align:left"><p/><br/>
+							<ul>
+								<li><code style="color:lightsalmon">ifPresentOrElse()</code> – Checks the presence of a non-null value, else, invokes the Runnable.</li>
+    							<li><code style="color:lightsalmon">or()</code> – Always return an optional.
+									<ul style="font-size:0.9em;text-align:left">
+    									<li>Wrap and return an Optional of the current value if not null.</li>
+    									<li>If current value is null, return Optional by invoking the specified Supplier.</li>
+    								</ul>
+    							</li>
+								<li><code style="color:lightsalmon">stream()</code> – Returns a sequential stream containing only the value, if the value is non-null.</li>
+								<br/>
+								<li>Links: 
+									<ul style="font-size:0.9em;text-align:left">
+										<li><code style="color:lightsalmon">java.util.Optional</code> API: <a href="https://docs.oracle.com/javase/9/docs/api/java/util/Optional.html" target="_blank">https://docs.oracle.com/javase/9/docs/api/java/util/Optional.html</a></li>
+										<li>Writeup: <a href="https://cguntur.me/2017/09/04/java-9-features-changes-to-optional/" target="_blank">https://cguntur.me/2017/09/04/java-9-features-changes-to-optional/</a></li>
+									</ul>
+								</li>
+							</ul>
+						</span>
+					</section>
+
+					<section>
+						<h6>Language</h6>
+						<h2>Stream - Enhancements</h2>
+						<span style="font-size:0.6em;text-align:left"><p/><br/>
+							<ul>
+								<li><code style="color:lightsalmon">takeWhile()</code> and <code style="color:lightsalmon">dropWhile()</code> to proces a stream until a condition is met.</li>
+								<li><code style="color:lightsalmon">ofNullable()</code> returns a stream of 0 or 1 elements based on the value being null.</li>
+								<li><code style="color:lightsalmon">iterate()</code> overloaded to a 3 param method similar to an old-fashioned <code style="color:lightsalmon">for</code> loop.</li>
+								<br/>
+								<li>Links: 
+									<ul style="font-size:0.85em;text-align:left">
+										<li><code style="color:lightsalmon">java.util.stream.Stream</code> API: <br/><a href="https://docs.oracle.com/javase/9/docs/api/java/util/stream/Stream.html" target="_blank">https://docs.oracle.com/javase/9/docs/api/java/util/stream/Stream.html</a></li>
+									</ul>
+								</li>
+							</ul>
+						</span>
+					</section>
+
+					<section>
+						<h6>Language</h6>
+						<h2>Concurrency - Enhancements</h2>
+						<aside class="notes">
+							Interfaces supporting the Reactive Streams publish-subscribe framework, 
+							New class Flow.Publishers produce items consumed by one or more Subscribers, each managed by a Subscription. 
+						</aside>
+						<span style="font-size:0.5em;text-align:left"><p/><br/>
+							<ul>
+								<li>Support for a reactive stream Pub-Sub framework introduced.
+									<ul style="font-size:0.9em;text-align:left">
+										<li>Fully complies with the reactive streams manifesto. (<a href="http://www.reactive-streams.org/" target="_blank">http://www.reactive-streams.org/</a>):
+											<ol style="font-size:0.9em;text-align:left">
+												<li>process a potentially unbounded number of elements</li><li>in sequence</li><li>asynchronously passing elements between components</li><li>with mandatory non-blocking backpressure.</li>
+											</ol>
+										</li>
+										<li>Requires a <code style="color:lightsalmon">Publisher</code>, <code style="color:lightsalmon">Subscription</code>, <code style="color:lightsalmon">Subscriber</code> and a <code style="color:lightsalmon">Processor</code>.</li>
+										<li>No N/W- or I/O-based <code style="color:lightsalmon">java.util.concurrent</code> components for distributed messaging, in JDK9.</li>
+									</ul>
+								</li>
+								<br/>
+								<li>Enhancements to the <code style="color:lightsalmon">CompletableFuture</code> API introduced.
+									<ul style="font-size:0.9em;text-align:left">
+										<li>Time-based enhancements enable a future to complete with a value or exceptionally after a certain duration.</li>
+										<li>Subclass enhancements make it easier to extend from <code style="color:lightsalmon">CompletableFuture</code>.</li>
+									</ul>
+								</li>
+								<br/>
+								<li>Links: 
+									<ul style="font-size:0.9em;text-align:left">
+										<li>JEP 266 - Concurrency Enhancements: <a href="http://openjdk.java.net/jeps/266" target="_blank">http://openjdk.java.net/jeps/266</a></li>
+										<li><code style="color:lightsalmon">java.uril.concurrent.Flow</code> API: <a href="https://docs.oracle.com/javase/9/docs/api/java/util/concurrent/Flow.html" target="_blank">https://docs.oracle.com/javase/9/docs/api/java/util/concurrent/Flow.html</a></li>
+										<li>Oracle docs on Reactive Streams: <a href="https://community.oracle.com/docs/DOC-1006738" target="_blank">https://community.oracle.com/docs/DOC-1006738</a></li>
+									</ul>
+								</li>
+							</ul>
+						</span>
+					</section>
+
+					<section>
+						<h6>Language</h6>
+						<h2>Deprecation - Enhancements</h2>
+						<span style="font-size:0.5em;text-align:left"><p/><br/>
+							<ul>
+								<li>History:
+									<ul>
+										<li>Deprecation was a javadoc feature via <code style="color:lightsalmon">@deprecated</code> annotation in the comment.</li> 
+										<li>The javadoc comment was limited in visibility since it was in documentation.</li>
+										<li>New <strong>code</strong> annotation <code style="color:lightsalmon">@Deprecated</code> introduced in Java 5.</li>
+									</ul>
+								</li>
+								<br/>
+								<li>The annotation has two (optional) parameters since Java 9:
+									<ul>
+										<li><code style="color:lightsalmon">forRemoval</code>: Boolean indicating a hint to remove from future releases, if true.</li>
+										<li><code style="color:lightsalmon">since</code>: String representing version when deprecation was set.</li>
+									</ul>
+								</li>
+								<li>New deprecation parameters clarify if an API may be removed in the near future.</li>
+								<li>New <code style="color:lightsalmon">jdeprscan</code> scans jars or any other aggregation of classes deprecated API usage.</li>
+								<br/>
+								<li>Links: 
+									<ul style="font-size:0.9em;text-align:left">
+										<li>JEP 277 - Enhanced Deprecation: <a href="http://openjdk.java.net/jeps/277" target="_blank">http://openjdk.java.net/jeps/277</a></li>
+										<li>Oracle docs on Deprecation: <a href="https://docs.oracle.com/javase/9/core/enhanced-deprecation1.htm" target="_blank">https://docs.oracle.com/javase/9/core/enhanced-deprecation1.htm</a></li>
+										<li>Oracle docs on <code>jdeprscan</code>: <a href="https://docs.oracle.com/javase/9/tools/jdeprscan.htm" target="_blank">https://docs.oracle.com/javase/9/tools/jdeprscan.htm</a></li>
+									</ul>
+								</li>
+							</ul>
+						</span>
+					</section>
+
+					<section>
+						<h6>Language</h6>
+						<h2>New Stack-Walking API</h2>
+						<span style="font-size:0.55em;text-align:left"><p/><br/>
+							<ul>
+								<li>Changed from <code style="color:lightsalmon">StackTraceElement</code> to <code style="color:lightsalmon">StackWalker</code>  instance.</li>
+								<li><code style="color:lightsalmon">StackTraceElement</code> required an all-or-nothing fetch, and was expensive.</li>
+								<br/>
+								<li><code style="color:lightsalmon">StackWalker</code> is thread-safe, filter-enabled and skip-enabled.</li>
+								<li>Stack-walking API enables lazy access and easy filtering in stack traces.</li>
+								<li>Supports both long and short walks.
+									<ul>
+										<li><strong>long walks</strong> - traverse the entire stack.</li>
+										<li><strong>short walks</strong> - filter to - <em>or</em> - skip to specific frame.</li>
+									</ul>
+								</li> 
+								<li>The short walks reduce the cost of analyzing all frames.
+									<ul><li>Caller has an option now to explore only the top frames.</li></ul>
+								</li>
+								<br/>
+								<li>Links: 
+									<ul style="font-size:0.85em;text-align:left">
+										<li>JEP 259 - Stack-Walking: <a href="http://openjdk.java.net/jeps/259" target="_blank">http://openjdk.java.net/jeps/259</a></li>
+										<li><code style="color:lightsalmon">java.lang.StackWalker</code> API: <a href="https://docs.oracle.com/javase/9/docs/api/java/lang/StackWalker.html" target="_blank">https://docs.oracle.com/javase/9/docs/api/java/lang/StackWalker.html</a></li>
+									</ul>
+								</li>
+							</ul>
+						</span>
+					</section>
+
+					<section>
+						<h6>Language</h6>
+						<h2>Compact Strings</h2>
+						<span style="font-size:0.55em;text-align:left"><p/><br/>
+							<ul>
+								<li>Initiated in Java 6 as "compressed strings", deprecated in Java 7 and removed in Java 8.
+									<ul>
+										<li>Flag needed to be enabled (default was off), see the + below.</li>
+										<li>Old flag: <code>-XX:+UseCompressedStrings</code></li>
+										<li><span style="font-size:0.8em;text-align:left;"><span style="font-style: italic;">"experimental feature, ... ultimately limited by design, error-prone, ... hard to maintain"</span> - A. Shipilev.</span></li>
+										<li>Pointed to a <code style="color:lightsalmon">byte[]</code> <em>if</em> string only had 7-bit ASCII <em>else</em> to <code style="color:lightsalmon">char[]</code> .</li>
+										<li>String operations depended on <code style="color:lightsalmon">char[]</code> for operations, hence was non-optimal.</li>
+									</ul>
+								</li>
+								<br/>
+								<li>Replaced above with <strong>Compact Strings</strong>.
+									<ul>
+								 		<li>Every string now a <code style="color:lightsalmon">byte[]</code> representation with an <strong style="color:#1c86ee">encoding field</strong> flag.</li>
+										<li>Encoding field can determine if conversion from <code style="color:lightsalmon">byte[]</code> to <code style="color:lightsalmon">char[]</code> is needed.</li>
+										<li>New flag is <strong>enabled by default</strong>.</li> 
+										<li><code style="color:#1c86ee">-XX:-CompactStrings</code> to disable.</li>
+									</ul>
+								</li>
+								<br/>
+								<li>Links: 
+									<ul style="font-size:0.85em;text-align:left">
+										<li>JEP 254 - Compact Strings: <a href="http://openjdk.java.net/jeps/254" target="_blank">http://openjdk.java.net/jeps/254</a></li>
+									</ul>
+								</li>
+							</ul>
+						</span>
+					</section>
+
+					<section>
+						<h6>Language</h6>
+						<h2 style="font-size:0.95em;">Few Other Language Enhancements</h2>
+						<aside class="notes">
+							Profiled - lightly optimized. Other two - longer lifetime.
+						</aside>
+
+						<span style="font-size:0.55em;text-align:left"><p/><br/>
+							There are way too many enhancements to list !
+							<ul>
+								<li>JEP 213 - Milling Project Coin: <a href="http://openjdk.java.net/jeps/213" target="_blank">http://openjdk.java.net/jeps/213</a>:
+									<ul style="font-size:0.8em;text-align:left">
+										<li>Allows <code style="color:lightsalmon">@SafeVarargs</code> on private instance methods (<span style="color:red">typo in JEP, there is no <code>@SafeVargs</code></span>).</li>
+										<li>Allows final variables as a resource in try-with-resource statement.</li>
+										<li>Allows diamond operator with anonymous classes if the argument type is denotable.</li>
+									</ul>
+								</li>
+								<br/>
+								<li>JEP 197 - Segmented Code Cache: <a href="http://openjdk.java.net/jeps/197" target="_blank">http://openjdk.java.net/jeps/197</a>:
+									<br/>Segemented code-cache for profiled, non-profiled and non-method code.
+									<ul style="font-size:0.8em;text-align:left">
+										<li><strong style="color:#1c86ee">Non-method code</strong> heap cache (compiler buffers, bytecode interprter etc.)- <strong style="color:#1c86ee">long lifetime cache</strong>.</li>
+										<li><strong style="color:#1c86ee">Non-profiled</strong> or more static code (fully optimized code) - <strong style="color:#1c86ee">long lifetime cache</strong>.</li>
+										<li><strong style="color:#1c86ee">Profiled</strong> code (lightly optimized) - <strong style="color:#1c86ee">short lifetime cache</strong>.</li>
+									</ul>
+								</li>
+								<br/>
+								<li>Process API improvements - <a href="https://docs.oracle.com/javase/9/core/process-api1.htm" target="_blank">https://docs.oracle.com/javase/9/core/process-api1.htm</a></li>
+								<br/>
+								<li>Comprehensive list of JDK 9 features.
+									<ul style="font-size:0.9em;text-align:left">
+										<li><a href="http://openjdk.java.net/projects/jdk9/" target="_blank">http://openjdk.java.net/projects/jdk9/</a></li>
+									</ul>
+								</li>
+							</ul>
+						</span>
+					</section>
+
+				</section>
+
+				<section data-background="images/BlankWaterMark.png" data-state="dimbg" data-background-size="150px" data-background-repeat="no-repeat">
+
+					<section>
+						<h6>Assorted Changes</h6>
+						<h1>Ungrouped Important Features</h1>
+						<span style="font-size:0.6em;text-align:left"><p/><br/>
+							The next few slides cover a few important features added to Java 9.
+						</span>
+					</section>
+
+					<section>
+						<h6>Garbage Collection</h6>
+						<h2>New Default GC - G1GC</h2>
+						<span style="font-size:0.6em;text-align:left"><p/><br/>
+							Java 9 makes Garbage-first Garbage Collector (G1GC) as the default. 
+							<ul>
+								<li>Originally introduced in Java 7 and targeted for Java 8.</li>
+								<li>No more PermGen !!!</li>
+								<li>JVM now uses a metaspace (curtailing usage of available memory).</li>
+								<li>Heap divided into ~2048 equal sized <strong style="color:#1c86ee">regions</strong>.</li>
+								<li>Regions get marked as Eden, Survivor or Old as needed.</li>
+								<li>GC focusses on garbage-heavy regions == STW (Stop-The-World) cycles are shorter.</li>
+								<li>With very minor or no tweaks, <em>* most *</em> code will see performance gains.</li>
+								<br/>
+								<li>Links:
+									<ul style="font-size:0.85em;text-align:left">
+										<li>JEP 248 - Make G1 the default collector: <a href="http://openjdk.java.net/jeps/248" target="_blank">http://openjdk.java.net/jeps/248</a>.</li>
+										<li>Oracle docs on G1GC: <a href="https://docs.oracle.com/javase/9/gctuning/garbage-first-garbage-collector.htm" target="_blank">https://docs.oracle.com/javase/9/gctuning/garbage-first-garbage-collector.htm</a></li>
+									</ul>
+								</li>
+							</ul>
+						</span>
+					</section>
+
+					<section>
+						<h6>Versions</h6>
+						<h2>Version String Scheme</h2>
+						<span style="font-size:0.6em;text-align:left"><p/><br/>
+							New version scheme for JDK and JRE releases. <br/><em style="font-size:0.5em;text-align:left;color:red">Caveat Emptor: Version strings in- and post-Java 9 may vary!</em>
+							<ul>
+								<li>Version string scheme in Java 9 is <strong style="color:#1c86ee">$MAJOR.$MINOR.$SECURITY_PATCH.</strong></li>
+								<li>Replaces the confusing collision of version and build numbers in prior versions.</li> 
+								<li>This change may be short-lived due to a newer proposal from Oracle.</li>
+								<li>Proposal for Long-Term-Support (LTS) versioning based on <strong style="color:#1c86ee">$YEAR.$MONTH</strong>.</li>
+								<li>Implies a release every six months.</li>
+								<li>Java 10 may be known as Java 18.3 or Java 18.9 (March or September release).</li>
+								<br/>
+								<li>Links: 
+									<ul style="font-size:0.85em;text-align:left">
+										<li>JEP 223 - Version-String Scheme: <a href="http://openjdk.java.net/jeps/223" target="_blank">http://openjdk.java.net/jeps/223</a></li>
+										<li>LTS Versioning Proposal: <a href="https://mreinhold.org/blog/forward-faster" target="_blank">https://mreinhold.org/blog/forward-faster</a></li>
+										<li>Plea against LTS: <a href="http://mail.openjdk.java.net/pipermail/discuss/2017-September/004352.html">http://mail.openjdk.java.net/pipermail/discuss/2017-September/004352.html</a></li>
+									</ul>
+								</li>
+							</ul>
+						</span>
+					</section>
+
+					<section>
+						<h6>Compiler</h6>
+						<h2>Compiler Enhancements</h2>
+						<span style="font-size:0.6em;text-align:left"><p/><br/>
+							Compile For Previous Platforms.
+							<ul>
+								<li>A <strong style="color:#1c86ee">--release</strong> option added as a new compiler directive.
+									<ul style="font-size:0.85em;text-align:left">
+										<li>Was not sufficient to just set the <span style="color:#1c86ee">-source</span> and <span style="color:#1c86ee">-target</span> options to the older value.</li>
+										<li>The <span style="color:#1c86ee">bootclasspath</span> had to also be set to correspond to the older release.</li>
+										<li>Forgetting the <span style="color:#1c86ee">bootclasspath</span> may have resulted in use of unsupported APIs on the target.</li>
+										<li>The new <span style="color:#1c86ee">--release</span> option will prevent any random use of unsupported API.</li>
+										<li>Single flag (<code style="color:#1c86ee">--release</code>) to cross compile.</li>
+										<li>Supported releases follow the "one plus three back" policy same as prior versions.</li>
+										<li>Supported release targets are 6, 7, 8, and 9.</li>
+									</ul>
+								</li>
+								<br/>
+								<li>Restrictions apply when using the <span style="color:#1c86ee">--release</span> for module support (JDK 9, for instance).</li>
+								<br/>
+								<li>Links: 
+									<ul style="font-size:0.85em;text-align:left">
+										<li>JEP 247 - Compile for Older Platforms: <a href="http://openjdk.java.net/jeps/247" target="_blank">http://openjdk.java.net/jeps/247</a></li>
+										<li>Original Bug: <a href="https://bugs.openjdk.java.net/browse/JDK-8058150" target="_blank">https://bugs.openjdk.java.net/browse/JDK-8058150</a></li>
+									</ul>
+								</li>
+							</ul>
+						</span>
+					</section>
+
+					<section>
+						<h6>Language</h6>
+						<h2>Few Other Enhancements</h2>
+						<span style="font-size:0.55em;text-align:left"><p/><br/>
+							New compiler control to issue compiler directives. New TLS, DTLS Support.
+							<ul>
+								<li>New Compiler Control supersedes and is backward compatible with CompileCommand.
+									<ul>
+										<li>Compiler Control is useful for creating workarounds for bugs in the JVM compilers.</li>
+										<li>JEP 165 - Compiler Control: <a href="http://openjdk.java.net/jeps/165" target="_blank">http://openjdk.java.net/jeps/165</a></li>
+										<li>Documentation: <a href="https://docs.oracle.com/javase/9/vm/compiler-control1.htm" target="_blank">https://docs.oracle.com/javase/9/vm/compiler-control1.htm</a></li>
+									</ul>
+								</li>
+								<br/>
+								<li>New <strong style="color:#1c86ee">DTLS</strong> (Datagram Transport Layer Security) “TLS over Datagram” protocol support.
+									<ul style="font-size:0.9em;text-align:left">
+										<li>Oracle docs on JSSE: <a href="https://docs.oracle.com/javase/9/security/java-secure-socket-extension-jsse-reference-guide.htm" target="_blank">https://docs.oracle.com/javase/9/security/java-secure-socket-extension-jsse-reference-guide.htm</a></li>
+										<li>Oracle docs on Security: <a href="https://docs.oracle.com/javase/9/security/toc.htm" target="_blank">https://docs.oracle.com/javase/9/security/toc.htm</a></li>
+									</ul>
+								</li>
+							</ul>
+						</span>
+						<aside class="notes">
+							Compiler Control:
+							<ul style="font-size:0.55em;text-align:left">
+								<li>A compiler directive is an instruction that tells the JVM how compilation should occur.</li>
+								<li>Directives are a powerful tool for writing small, contained, JVM compiler tests.</li>
+								<li>Compiler Control is useful for creating workarounds for bugs in the JVM compilers.</li>
+							</ul>
+						</aside>
+					</section>
+
+				</section>
+
+
+				<section data-background="images/BlankWaterMark.png" data-state="dimbg" data-background-size="150px" data-background-repeat="no-repeat">
+
+					<section>
+						<h6>Modularity</h6>
+						<h1>Modularity - Project Jigsaw</h1>
+						<span style="font-size:0.6em;text-align:left"><p/><br/>
+							The next few slides cover the delivery of project Jigsaw.
+							<br/>
+							Link: <a href="http://openjdk.java.net/projects/jigsaw/" target="_blank">http://openjdk.java.net/projects/jigsaw/</a>
+						</span>
+					</section>
+
+					<section>
+						<h6>Modularity</h6>
+						<h2>Java Plaform Module System</h2>
+						<span style="font-size:0.55em;text-align:left"><p/><br/>
+							Java 9 introduces a module system with its distribution specified as Java Platform Module System.
+							<ul>
+								<li>Prior dependency image: <a href="https://bugs.openjdk.java.net/secure/attachment/72525/jdk.png" target="_blank">https://bugs.openjdk.java.net/secure/attachment/72525/jdk.png</a></li>
+								<li>Aims to reduce the large and growing size of the java package ecosystem.</li>
+								<li>Allows splitting the JDK in smaller units (modules).</li>
+								<li>Root module called <code style="color:lightsalmon">java.base</code>.</li>
+								<li>Leads to subsequent deprecation/removal of some vestigial packages.</li>
+								<li>Dependencies packaged as <code style="color:lightsalmon">.jmod</code> files.</li>
+								<li>New tools such as <code style="color:lightsalmon">jlink</code> to create custom runtime bundles.</li>
+								<li>Module path to replace classpath.</li>
+								<br/>
+								<li>Links:
+									<ul style="font-size:0.9em;text-align:left">
+										<li>Modules and Javac: <a href="http://openjdk.java.net/projects/jigsaw/doc/ModulesAndJavac.pdf" target="_blank">http://openjdk.java.net/projects/jigsaw/doc/ModulesAndJavac.pdf</a></li>
+										<li>State of the Module System (slightly out-of-date): <a href="http://openjdk.java.net/projects/jigsaw/spec/sotms/" target="_blank">http://openjdk.java.net/projects/jigsaw/spec/sotms/</a></li>
+									</ul>
+								</li>
+							</ul>
+						</span>
+					</section>
+
+					<section>
+						<h6>Modularity</h6>
+						<h2>JDK 9 Modularity</h2>
+						<span style="font-size:0.55em;text-align:left"><p/><br/>
+							Java 9 itself is a modular system
+							<ul>
+								<li>Restructures the JDK and JRE runtime images - as modules.</li>
+								<li>New images improve performance, security, and maintainability.</li>
+								<li>Modularity allows creation of custom configurations.</li>
+								<ul><li>(see Compact Profiles: <a href="http://openjdk.java.net/jeps/161" target="_blank">http://openjdk.java.net/jeps/161</a>).</li></ul></li>
+								<li>New URI scheme for naming modules, classes/resources stored in a runtime image.</li>
+								<li>No more <code style="color:lightsalmon">rt.jar</code> and <code style="color:lightsalmon">tools.jar</code> in libs.</li>
+								<br/>
+								<li>Links: 
+									<ul style="font-size:0.9em;text-align:left">
+										<li>JPMS (JSR 376): <a href="http://openjdk.java.net/projects/jigsaw/spec/" target="_blank">http://openjdk.java.net/projects/jigsaw/spec/</a></li>
+										<li>JEP 261 - Module System: <a href="http://openjdk.java.net/jeps/261" target="_blank">http://openjdk.java.net/jeps/261</a></li>
+										<li>JEP 200 - The Modular JDK: <a href="http://openjdk.java.net/jeps/200" target="_blank">http://openjdk.java.net/jeps/200</a></li>
+										<li>JEP 220 - Modular Run-Time Images: <a href="http://openjdk.java.net/jeps/220" target="_blank">http://openjdk.java.net/jeps/220</a></li>
+										<li>JEP 260 - Encapsulate Most Internal APIs: <a href="http://openjdk.java.net/jeps/260" target="_blank">http://openjdk.java.net/jeps/260</a></li>
+									</ul>
+								</li>
+							</ul>
+						</span>
+					</section>
+
+					<section>
+						<h6>Modularity</h6>
+						<h2>Java Linker: jlink</h2>
+						<span style="font-size:0.55em;text-align:left"><p/><br/>
+						<ul>
+							<li><code style="color:lightsalmon">jlink</code> is responsible for assembling and optimizing modules.</li> 
+							<li><code style="color:lightsalmon">jlink</code> also links transitive dependencies.</li>
+							<li>Is a descendant of <code style="color:lightsalmon">jrecreate</code> used to build EJDKs.</li>
+							<li>It produces a custom runtime image that reduces the size and complexity of the deployment.</li>
+							<li>Java always had dynamic linking, jlink introduces <em>optional</em> static linking.</li>
+							<li>This optional static linking phase is called <strong style="color:#1c86ee">link time</strong> that occurs between compile and run time.</li>
+							<br/>
+							<li>Links:
+									<ul style="font-size:0.9em;text-align:left">
+									<li>JEP 282 - jlink - The Java Linker: <a href="http://openjdk.java.net/jeps/282" target="_blank">http://openjdk.java.net/jeps/282</a></li>
+									<li>Oracle docs on jlink: <a href="https://docs.oracle.com/javase/9/tools/jlink.htm" target="_blank">https://docs.oracle.com/javase/9/tools/jlink.htm</a></li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+				</section>
+
+				<section data-background="images/BlankWaterMark.png" data-state="dimbg" data-background-size="150px" data-background-repeat="no-repeat">
+
+					<section>
+						<h6>Tooling</h6>
+						<h2>Tooling Changes</h2>
+						<span style="font-size:0.6em;text-align:left"><p/><br/>
+							The next few slides cover tooling changes.
+						</span>
+					</section>
+
+					<section>
+						<h6>Tooling</h6>
+						<h2>JShell</h2>
+						<span style="font-size:0.6em;text-align:left"><p/><br/>
+							A read-eval-print-loop (REPL) for a transcript evaluation on a command prompt.
+							<ul>
+								<li>Originally targeted for Java 7.</li>
+								<li>Accepts "snippets" of Java code, evaluates them and immediately displays the results.</li>
+								<li>Built on JShell API, evaluation of snippets of Java code available to any Java program.</li>
+								<li>In-depth coverage: <a href="http://cr.openjdk.java.net/~rfield/tutorial/JShellTutorial.html" target="_blank">http://cr.openjdk.java.net/~rfield/tutorial/JShellTutorial.html</a></li>
+								<br/>
+								<li>Links:
+									<ul style="font-size:0.85em;text-align:left">
+										<li>JEP 222 - jshell - The Java Shell: <a href="http://openjdk.java.net/jeps/222" target="_blank">http://openjdk.java.net/jeps/222</a>.</li>
+										<li>Oracle docs on jshell: <a href="https://docs.oracle.com/javase/9/tools/jshell.htm" target="_blank">https://docs.oracle.com/javase/9/tools/jshell.htm</a></li>
+									</ul>
+								</li>
+							</ul>
+						</span>
+					</section>
+
+					<section>
+						<h6>Tooling</h6>
+						<h2>Enhanced JavaDoc</h2>
+						<span style="font-size:0.6em;text-align:left"><p/><br/>
+							Upgraded the user experience in API documentation.
+							<ul>
+								<li>Addition of a search for quick access - <a href="http://openjdk.java.net/jeps/225" target="_blank">http://openjdk.java.net/jeps/225</a>.</li>
+								<li>New Doclet API, to meet and use existing standards - <a href="http://openjdk.java.net/jeps/221" target="_blank">http://openjdk.java.net/jeps/221</a>.</li>
+								<li>HTML5 output for Javadoc - <a href="http://openjdk.java.net/jeps/224" target="_blank">http://openjdk.java.net/jeps/224</a>.</li>
+							</ul>
+						</span>
+					</section>
+
+					<section>
+						<h6>Tooling</h6>
+						<h2>Better Java Control Panel <br/>(Oracle JDK)</h2>
+						<span style="font-size:0.6em;text-align:left"><p/><br/>
+							Upgraded the user experience in the control panel.
+							<ul>
+								<li>Improved presentation and grouping of options in the control panel.</li>
+								<li>Information easier to locate, no modal dialog boxes, search field is available.</li>
+								<li>Less useful APIs deprecated - web browsers removed Java browser plugin support.</li>
+								<br/>
+								<li>Links:
+									<ul style="font-size:0.85em;text-align:left">
+										<li>Oracle docs on the Control Panel: <a href="https://docs.oracle.com/javase/9/deploy/java-control-panel.htm" target="_blank">https://docs.oracle.com/javase/9/deploy/java-control-panel.htm</a></li>
+									</ul>
+								</li>
+							</ul>
+						</span>
+					</section>
+				</section>
+
+				<section data-background="images/BlankWaterMark.png" data-state="dimbg" data-background-size="150px" data-background-repeat="no-repeat">
+
+					<section>
+						<h6>Challenges</h6>
+						<h1>Migration Challenges</h1>
+						<span style="font-size:0.55em;text-align:left"><p/><br/>
+							The next few slides list challenges adopting JDK 9 due to deprecation or fixing of prior "<em>features</em>". 
+							<br/><br/>
+							Migrating is non-trivial if you use reflection or private internal APIs (e.g. <code style="color:lightsalmon">sun.misc packages</code>).
+							<br/><br/>
+							Other challenges could usage of experimental features in prior JDKs.
+							<br/><br/>
+							Module System Risks and Assumptions is a good read: <br/><a href="http://openjdk.java.net/jeps/261#Risks-and-Assumptions" target="_blank">http://openjdk.java.net/jeps/261#Risks-and-Assumptions</a>
+							<br/><br/>
+							Excellent resource that helped understand these challenges is from Nicolai Parlog's blog: <a href="https://blog.codefx.org/java/java-9-migration-guide/" target="_blank">https://blog.codefx.org/java/java-9-migration-guide/</a>
+						</span>
+					</section>
+
+					<section>
+						<h6>Challenges</h6>
+						<h2>Illegal Access to internal APIs</h2>
+						<aside class="notes">
+							
+						</aside>
+
+						<span style="font-size:0.5em;text-align:left"><p/><br/>
+							When you see the dreaded: <br/><code style="color:red">WARNING: An illegal reflective access operation has occurred</code>
+							<ul>
+								<li>Most obvious fix is to stop depending on internal APIs.</li>
+								<li>If depending cannot be avoided, at least acknowledge and set a flag to:
+									<ul style="font-size:0.9em;text-align:left">
+										<li><code style="color:lightsalmon">--add-exports $module/$package=$mymodule</code><br/>&nbsp;&nbsp;&nbsp;&nbsp;This will allow all public types of the module to be accessed by mymodule.</li>
+										<li><code style="color:lightsalmon">--add-opens $module/$package=$mymodule</code><br/>&nbsp;&nbsp;&nbsp;&nbsp;This will allow all public (and otherwise, <em>deep reflection</em>) types of the module to be accessed by mymodule.</li>
+									</ul>
+								</li>
+								<br/>
+								<li>Use <code style="color:lightsalmon">jdeps</code> to track down dependencies on internal APIs.</li>
+								<li>Special search is needed for reflective access: <code style="color:lightsalmon">--illegal-access=</code><code style="color:#1c86ee">$parameter</code>
+									<ul style="font-size:0.9em;text-align:left">
+										<li><code style="color:lightsalmon">--illegal-access=</code><code style="color:#1c86ee">permit</code> default for JDK 9. Access to all unnamed modules.</li>
+										<li><code style="color:lightsalmon">--illegal-access=</code><code style="color:#1c86ee">warn</code> warning message for each illegal reflective-access operation.</li>
+										<li><code style="color:lightsalmon">--illegal-access=</code><code style="color:#1c86ee">debug</code> warning and stack trace for each illegal reflective-access operation.</li>
+										<li><code style="color:lightsalmon">--illegal-access=</code><code style="color:#1c86ee">deny</code> disable all illegal reflective-access operations except for those enabled by above command-line options. Future default.</li>
+									</ul>
+								</li>
+							</ul>
+						</span>
+					</section>
+
+					<section>
+						<h6>Challenges</h6>
+						<h2>Java EE module separation</h2>
+						<aside class="notes">
+							
+						</aside>
+
+						<span style="font-size:0.5em;text-align:left"><p/><br/>
+							<ul>
+								<li>Java EE modules are not included in the module path.
+									<ul style="font-size:0.8em;text-align:left">
+										<li><code style="color:#1c86ee">java.activation</code> with <code style="color:lightsalmon">javax.activation</code> package.</li>
+										<li><code style="color:#1c86ee">java.corba</code> with <code style="color:lightsalmon">javax.activity</code>, <code style="color:lightsalmon">javax.rmi</code>, <code style="color:lightsalmon">javax.rmi.CORBA</code>, and <code style="color:lightsalmon">org.omg.*</code> packages.</li>
+										<li><code style="color:#1c86ee">java.transaction</code> with <code style="color:lightsalmon">javax.transaction</code> package.</li>
+										<li><code style="color:#1c86ee">java.xml.bind</code> with all <code style="color:lightsalmon">javax.xml.bind.*</code> packages.</li>
+										<li><code style="color:#1c86ee">java.xml.ws</code> with <code style="color:lightsalmon">javax.jws</code>, <code style="color:lightsalmon">javax.jws.soap</code>, <code style="color:lightsalmon">javax.xml.soap</code> and all <code style="color:lightsalmon">javax.xml.ws.*</code> packages.</li>
+										<li><code style="color:#1c86ee">java.xml.ws.annotation</code> with <code style="color:lightsalmon">javax.annotation</code> package.</li>	
+									</ul>
+								</li>
+								<br/>
+								<li>Work towards declaring a regular dependency in the module's declaration.</li>
+								<li>Until you have that, <code style="color:lightsalmon">--add-modules $module</code> is the tactical fix.
+									<ul style="font-size:0.9em;text-align:left">
+										<li>Either add individual modules as you need them.</li>
+										<li>Or add <code style="color:#1c86ee">java.se.ee</code> to get access to all Java EE modules.</li>
+									</ul>
+								</li>
+							</ul>
+						</span>
+					</section>
+
+					<section>
+						<h6>Challenges</h6>
+						<h2>Split package handling</h2>
+						<aside class="notes">
+							
+						</aside>
+
+						<span style="font-size:0.55em;text-align:left"><p/><br/>
+							<ul>
+								<li>A module is not allowed to read the same dependency package from more than one module.</li>
+								<li>In fact, no two modules are allowed to contain same package (think duplicate dependencies).</li>
+								<li>The module system complains if it finds split packages. Two pathways exist here:
+									<ul>
+										<li>Rather than a few classes, the code needs a replacement for an <em>entire existing</em> module.
+											<ul style="font-size:0.8em;text-align:left">
+												<li>Use the <code style="color:lightsalmon">--upgrade-module-path $dir</code> to replace the module.</li>
+												<li>See endorsed standards for upgrades: <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/standards/" target="_blank">https://docs.oracle.com/javase/8/docs/technotes/guides/standards/</a></li>
+											</ul>
+										</li>
+										<li>Tactical fix for a few classes, is to <strong><em>patch</em></strong> the artifact classes into current module.
+											<ul style="font-size:0.8em;text-align:left">
+												<li>Use the <code style="color:lightsalmon">--patch-module $module=$artifact</code> to patch the module.</li>
+												<li>An example is the <code style="color:lightsalmon">@Nonnull</code> (JSR 305) and <code style="color:#1c86ee">java.xml.ws.annotation</code> module.</li>
+												<li>Use <code style="color:lightsalmon">--patch-module java.xml.ws.annotation=</code><code>path/to/</code><code style="color:lightsalmon">jsr305-3.0.2.jar</code>.</li>
+												<li>As a strategic fix, determine how to remove such split.</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</span>
+					</section>
+
+					<section>
+						<h6>Challenges</h6>
+						<h2>Deprecation of Internal API</h2>
+						<aside class="notes">
+							
+						</aside>
+
+						<span style="font-size:0.55em;text-align:left"><p/><br/>
+							<ul>
+								<li>Divided into two broad categories:
+									<ul>
+										<li><strong>Non-critical internal APIs</strong>: Functionality available either in public JDK or via third-party libs.</li>
+										<li><strong>Critical internal APIs</strong>: Functionality cannot be available outside of the JDK.</li>
+									</ul>
+								</li>
+								<li>Critical APIs with replacements in JDK9 are deprecated in JDK9.
+									<ul>
+										<li>Such replaced API will either be encapsulated or removed in a future version of JDK.</li>
+									</ul>
+								</li>
+								<br/>
+								<li>Marked for deprecation (with no replacements in Java 9):
+									<ul style="font-size:0.85em;text-align:left">
+										<li><code style="color:lightsalmon">sun.misc.{Signal, SignalHolder}</code></li>
+										<li><code style="color:lightsalmon">sun.misc.Unsafe</code> - Some replacements via <em>variable handles</em> - <a href="http://openjdk.java.net/jeps/193" target="_blank">http://openjdk.java.net/jeps/193</a></li>
+										<li><code style="color:lightsalmon">sun.reflect.Reflection::getCallerClass(int)</code> <br/>&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:0.85em;text-align:left">Some functionality available in StackWalking API. <a href="http://openjdk.java.net/jeps/259" target="_blank">http://openjdk.java.net/jeps/259</a></span></li>
+										<li><code style="color:lightsalmon">sun.reflect.ReflectionFactory</code></li>
+										<li>Few classes in <code style="color:lightsalmon">com.sun.nio.file</code></li>
+									</ul>
+								</li>
+								<br/>
+								<li>Links:
+									<ul style="font-size:0.85em;text-align:left">
+										<li>JEP 260 - Encapsulate Most Internal APIs: <a href="http://openjdk.java.net/jeps/260" target="_blank">http://openjdk.java.net/jeps/260</a></li>
+										<li>Oracle docs on jshell: <a href="https://docs.oracle.com/javase/9/tools/jshell.htm" target="_blank">https://docs.oracle.com/javase/9/tools/jshell.htm</a></li>
+									</ul>
+								</li>
+							</ul>
+						</span>
+					</section>
+
+					<section>
+						<h6>Challenges</h6>
+						<h2>New Version strings</h2>
+						<aside class="notes">
+							
+						</aside>
+
+						<span style="font-size:0.55em;text-align:left"><p/><br/>
+							<ul>
+								<li>Several tools both open source and bespoke depend on java versions.</li>
+								<li>More than likely one of the following properties is used to check versions:
+									<ul style="font-size:0.85em;text-align:left">
+										<li><code style="color:lightsalmon">java.version</code></li>
+										<li><code style="color:lightsalmon">java.vm.version</code></li>
+										<li><code style="color:lightsalmon">java.runtime.version</code></li>
+										<li><code style="color:lightsalmon">java.specification.version</code></li>
+										<li><code style="color:lightsalmon">java.vm.specification.version</code></li>
+									</ul>
+								</li>
+								<br/>
+								<li>Replace above with the new <code style="color:lightsalmon">Runtime.Version</code> class.
+									<ul style="font-size:0.85em;text-align:left">
+										<li><a href="https://docs.oracle.com/javase/9/docs/api/java/lang/Runtime.Version.html" target="_blank">https://docs.oracle.com/javase/9/docs/api/java/lang/Runtime.Version.html</a></li>
+									</ul>
+								</li>
+								<li>Compatibility to older versions of java can be retained by aiming to build a multi-release jar.</li>
+								<br/>
+								<li>Links:
+									<ul style="font-size:0.85em;text-align:left">
+										<li>JEP 238 - Multi-release Jar: <a href="http://openjdk.java.net/jeps/238" target="_blank">http://openjdk.java.net/jeps/238</a></li>
+										<li>Another excellent blog from Nicolai Parlog: <a href="https://www.sitepoint.com/inside-java-9-part-i/#multireleasejars" target="_blank">https://www.sitepoint.com/inside-java-9-part-i/#multireleasejars</a></li>
+									</ul>
+								</li>
+							</ul>
+						</span>
+					</section>
+
+				</section>
+
+				<section data-menu-title="Out of time">
+					<span style="font-size:1.3em">Java 9</span><br/>
+					<span style="font-size:1.1em">That's all we have time for! </span><br/>
+					<span style="font-size:1.1em">HAPPY CODING !</span><br/>
+					<img src="images/DukeWaveJ9.png" height="400"/>
+				</section>
+
+
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+    			slideNumber: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+
+				menu: {
+					markers: true,
+					openSlideNumber: true,
+					transitions: false,
+					themes: [
+						{ name: 'Black', theme: 'css/theme/black.css' },
+						{ name: 'White', theme: 'css/theme/white.css' },
+						{ name: 'Blood', theme: 'css/theme/blood.css' },
+						{ name: 'Night', theme: 'css/theme/night.css' },
+			        ]
+			    },
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/reveal.js-menu/menu.js', async: true }
+				]
+			});
+
+		</script>
+
+		<div style="position: absolute; bottom: 20px; margin-left: 0px; width: 100%; 
+    		filter:alpha(opacity=4); 
+    		opacity:0.4; 
+    		border-color:#000000;">
+    		<center>
+				<img src="images/twitter.png" style="height:20px; vertical-align:middle"/><a href="http://www.twitter.com/cguntur" style="text-decoration:none">
+					<span style="font-weight:bold;color:#1c86ee;vertical-align:middle">@CGuntur</span>
+				</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<img src="images/linkedin.png" style="height:20px; vertical-align:middle"/><a href="http://www.linkedin.com/in/chandraguntur" style="text-decoration:none">
+					<span style="font-weight:bold;color:#1c86ee;vertical-align:middle">Chandra Guntur</span>
+				</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<img src="images/github1.png" style="height:30px; vertical-align:middle"/><a href="https://github.com/c-guntur" style="text-decoration:none">
+					<span style="font-weight:bold;color:#1c86ee;vertical-align:middle">gh: c-guntur</span>
+				</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<img src="images/chandra.png" style="height:20px; vertical-align:middle"/><a href="http://www.cguntur.me" style="text-decoration:none">
+					<span style="font-weight:bold;color:#1c86ee;vertical-align:middle">http://cguntur.me</span>
+				</a>
+	    	</center>
+	    </div>
+
+	</body>
+</html>
